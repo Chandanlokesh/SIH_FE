@@ -52,13 +52,15 @@ const QuickScan = () => {
         cveId: cveId ?? null
       },
       callback: (response) => {
+        console.log("[rs] response.status" , response.status , response.data.message)
         if (response.status === 200) {
           setJsonData(response.data.scanResults);
           setScanId(response.data.scanId);
           setScanStatus("idle");
+          console.log("inside [rs]")
         } else {
+          console.log("[rs] inside error")
           // Handle error response
-          setError(response.data.message);
           setScanStatus("failed");
         }
       },
@@ -151,7 +153,7 @@ const QuickScan = () => {
   {/* Right side - JSON Data Display */}
   <div className={`flex-1  border-l-[4px]`}>
          
-    {jsonData ? (
+    {jsonData && !error ? (
       <div className="flex flex-col ml-2 h-full">
   <div className="flex justify-between items-center mb-2">
     {/* Scan Details */}
@@ -201,6 +203,7 @@ const QuickScan = () => {
           {/* Collapsible Content */}
           {expandedIndex === index && (
             <div className="p-1 border-1-px">
+              <p><b>CVE ID:</b> {result.cve_id}</p>
               <p><b>Description:</b> {result.vulnerabilityDescription}</p>
               <p><b>Published Date:</b> {result.published_date}</p>
               <p><b>Last Modified:</b> {result.last_modified}</p>
@@ -229,12 +232,13 @@ const QuickScan = () => {
 </div>
     ):
     <div className="items-center justify-center flex h-full">
-      {scanStatus === "loading" ? (<>
-      <img src={loadingGif} alt="Loading..." className="h-64 w-64" /></>):
-         (scanStatus === "failed" ? <img src={errorImg} alt="Error" className="h-64 w-100" />:
-           <img src={startImg} alt="Start Scan" className="h-64 w-64" />)
+      {scanStatus === "loading" && <>
+      <img src={loadingGif} alt="Loading..." className="h-64 w-64" /></> }
+
+         {scanStatus === "failed"  && <img src={errorImg} alt="Error" className="h-64 w-100" />}
+         {scanStatus==="idle" && <img src={startImg} alt="Start Scan" className="h-64 w-64" />}
          
-         }
+         
        </div>
        }
   </div>

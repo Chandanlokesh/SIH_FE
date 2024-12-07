@@ -17,11 +17,15 @@ const HistoryComponent = ({ qucikScanData = [] }) => {
 
   return (
     <div className="space-y-4">
-      <div>
-        <h3 id="history" className="cursor-pointer" onClick={() => window.scrollTo(0, 0)}>
-          <a href={"#history"}>History</a>
-        </h3>
-      </div>
+     <div>
+  <h3 
+    id="history" 
+    className="cursor-pointer text-2xl font-bold hover:text-blue-800" 
+    // onClick={() => window.scrollTo(0, 0)}
+  >
+    <a href={"#history"}>History</a>
+  </h3>
+</div>
 
       {/* Options for Monitor Scans and Other History */}
       <div className="flex space-x-4">

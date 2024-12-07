@@ -26,7 +26,9 @@ export const postAPI = ({
       callback(response); // Call the callback function with the response
     })
     .catch((error) => {
-      console.error(error.response?.data || error.message); // Handle error as per your logic
+      const errorResponse = error.response || { status: 500, data: { message: "Unexpected error occurred" } };
+      console.error("API Error:", errorResponse.data.message);
+      callback(errorResponse); // Pass the error response to the callback
     });
 };
 
@@ -56,7 +58,9 @@ export const postAPI = ({
         callback(response); // Call the callback function with the response
       })
       .catch((error) => {
-        console.error(error.response?.data || error.message); // Handle error as per your logic
+        const errorResponse = error.response || { status: 500, data: { message: "Unexpected error occurred" } };
+        console.error("API Error:", errorResponse.data.message);
+        callback(errorResponse); // Pass the error response to the callback
       });
   };
   
