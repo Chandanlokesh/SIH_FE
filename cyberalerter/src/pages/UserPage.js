@@ -23,12 +23,12 @@ const UserPage = () => {
   };
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen ">
       {/* Sidebar on the left */}
       <Sidebar />
 
       {/* Main content on the right */}
-      <div className="flex-1 flex justify-center items-center bg-gray-100">
+      <div className="flex-1 flex justify-center items-center page-bg">
         {userData ? (
           <div className="w-full max-w-4xl bg-white rounded-2xl shadow-lg p-8 flex">
             {/* Left Division */}

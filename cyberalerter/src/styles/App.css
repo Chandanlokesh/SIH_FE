@@ -193,3 +193,28 @@
     box-shadow: 0 4px 10px rgba(255, 215, 0, 0.6); /* Glowing gold shadow */
   }
   
+
+.page-bg {
+  background: linear-gradient(
+    -45deg,
+    #e6f7ff, /* Light blue */
+    #ffffff, /* White */
+    #c9e9ff, /* Slightly darker blue */
+    #e6f7ff  /* Light blue again */
+  );
+  background-size: 400%;
+  animation: shimmer-bg 8s infinite ease-in-out;
+}
+  
+  @keyframes shimmer-bg {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
