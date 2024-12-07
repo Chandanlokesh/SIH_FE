@@ -193,7 +193,7 @@ const QuickScan = () => {
               <p><b>Published Date:</b> {result.published_date}</p>
               <p><b>Last Modified:</b> {result.last_modified}</p>
               <p><b>Base Score:</b> {result.baseScore}</p>
-              <p><b>Severity:</b> {result.baseSeverity}</p>
+             { result.baseSeverity && <p><b>Severity:</b> {result.baseSeverity}</p> }
               <p>
                 <b>OEM URL:</b>{" "}
                 <a
@@ -215,15 +215,27 @@ const QuickScan = () => {
   </div>
 </div>
     ):
-    <div className="items-center justify-center flex h-full">
-      {scanStatus === "loading" && <>
-      <img src={loadingGif} alt="Loading..." className=" w-200" /></> }
-
-         {scanStatus === "failed"  && <img src={errorImg} alt="Error" className="h-64 w-100" />}
-         {scanStatus==="idle" && <img src={startImg} alt="Start Scan" className="h-64 w-64" />}
-         
-         
-       </div>
+    <div className="items-center justify-center flex flex-col h-full">
+    {scanStatus === "loading" && (
+      <>
+        <img src={loadingGif} alt="Loading..." className="w-200" />
+      </>
+    )}
+  
+    {scanStatus === "failed" && (
+      <div className="text-center">
+        <img src={errorImg} alt="Error" className="h-64 w-64" />
+        <p className="mt-4 text-lg font-semibold text-gray-800">
+          Can't find any vulnerabilities.
+        </p>
+      </div>
+    )}
+  
+    {scanStatus === "idle" && (
+      <img src={startImg} alt="Start Scan" className="h-64 w-64" />
+    )}
+  </div>
+  
        }
   </div>
 </div>
