@@ -232,7 +232,7 @@ const QuickScan = () => {
     ):
     <div className="items-center justify-center flex h-full">
       {scanStatus === "loading" && <>
-      <img src={loadingGif} alt="Loading..." className="h-64 w-64" /></> }
+      <img src={loadingGif} alt="Loading..." className=" w-200" /></> }
 
          {scanStatus === "failed"  && <img src={errorImg} alt="Error" className="h-64 w-100" />}
          {scanStatus==="idle" && <img src={startImg} alt="Start Scan" className="h-64 w-64" />}
