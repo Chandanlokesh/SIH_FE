@@ -207,7 +207,6 @@ const QuickScan = () => {
               <p><b>Description:</b> {result.vulnerabilityDescription}</p>
               <p><b>Published Date:</b> {result.published_date}</p>
               <p><b>Last Modified:</b> {result.last_modified}</p>
-              <p><b>Status:</b> {result.vuln_status}</p>
               <p><b>Base Score:</b> {result.baseScore}</p>
               <p><b>Severity:</b> {result.baseSeverity}</p>
               <p>

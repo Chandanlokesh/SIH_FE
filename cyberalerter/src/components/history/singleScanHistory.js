@@ -139,9 +139,6 @@ filteredProducts.map((scan, index) => {
                       : "N/A"}
                   </p>
                   <p>
-                    <b>Status:</b> {result.vuln_status}
-                  </p>
-                  <p>
                     <b>Base Score:</b> {result.baseScore}
                   </p>
                   <p>
