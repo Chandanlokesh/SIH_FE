@@ -10,7 +10,6 @@ const QuickScan = () => {
   // State variables for form inputs
   const [productName, setProductName] = useState("apache");
   const [productVersion, setProductVersion] = useState("2.4.41");
-  const [cveId, setCveId] = useState("CVE-2024-0001");
   const [jsonData, setJsonData] = useState(null); // State to store the JSON data
   const [error, setError] = useState("");
   const [scanId, setScanId] = useState("");
@@ -49,7 +48,6 @@ const QuickScan = () => {
         userId: Cookies.get('userId'),
         productName: productName,
         productVersion: productVersion ?? null,
-        cveId: cveId ?? null
       },
       callback: (response) => {
         console.log("[rs] response.status" , response.status , response.data.message)
@@ -114,25 +112,12 @@ const QuickScan = () => {
           placeholder="Enter Product Version"
         />
       </div>
-      <div>
-        <label className="block text-sm font-semibold mb-2">
-          CVE ID (optional)
-        </label>
-        <input
-          type="text"
-          value={cveId}
-          onChange={(e) => setCveId(e.target.value)}
-          className="w-full p-2 border rounded-md"
-          placeholder="Enter CVE ID"
-        />
-      </div>
     </form>
     <div className="mt-4 flex self-end space-x-2">
     <button
         type="button"
         className="border-blue-500 border text-blue-500 py-2 px-6 rounded-lg "
         onClick={()=>{
-          setCveId("");
           setProductVersion("");
           setProductName("");
         }}

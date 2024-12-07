@@ -43,7 +43,7 @@ const DashboardPage = () => {
   }
 
   return (
-    <div className="flex h-screen bg-[#E6F7FF]">
+    <div className="flex h-screen bg-gray-300">
       {/* Sidebar on the left */}
       <Sidebar />
 
