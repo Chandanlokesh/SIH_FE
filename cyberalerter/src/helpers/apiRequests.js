@@ -60,38 +60,32 @@ export const postAPI = ({
       });
   };
   
-export const Upgrade =()=>{
-
-const storedData = localStorage.getItem("userData");
-
-let userData = storedData ? JSON.parse(storedData) : null;
-
-// if (userData) {
-//   userData.subscriptionPlan = "Pro"; 
-//   localStorage.setItem("userData", JSON.stringify(userData));
-//   console.log("[sub] Updated to pro,", userData);
-// } else {
-//   console.error("No userData found in localStorage");
-// }
-
-   const userId= Cookies.get("userId")
-  postAPI({
-    endpoint: "/Users/upgrade",
-    params: {
-      userId: userId,
-    },
-    callback: (response) => {
-      if (response.status === 200) {
-        // Handle success
-        console.log(response.data.message);
-        userData.subscriptionPlan = "Pro"; 
-        localStorage.setItem("userData", JSON.stringify(userData));
-        console.log("[sub] Updated to pro,", userData);
-        alert('Subscribed successfuly');
-      } else {
-        // Handle error response
-        console.error(response.data.message);
-      }
-    },
-  });
-}
+  export const Upgrade = (setUserData) => {
+    const storedData = localStorage.getItem("userData");
+    let userData = storedData ? JSON.parse(storedData) : null;
+  
+    const userId = Cookies.get("userId");
+    postAPI({
+      endpoint: "/Users/upgrade",
+      params: {
+        userId: userId,
+      },
+      callback: (response) => {
+        if (response.status === 200) {
+          // Handle success
+          console.log(response.data.message);
+          userData.subscriptionPlan = "Pro";
+          localStorage.setItem("userData", JSON.stringify(userData));
+          console.log("[sub] Updated to pro,", userData);
+          alert('Subscribed successfully');
+  
+          // Update the state again after API success to ensure UI reflects the change
+          setUserData(userData);  // Trigger UI update
+        } else {
+          // Handle error response
+          console.error(response.data.message);
+        }
+      },
+    });
+  };
+  

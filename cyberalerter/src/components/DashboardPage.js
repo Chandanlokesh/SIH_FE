@@ -26,9 +26,7 @@ const PreviewComponent = ({ qucikScanData }) => {
 
   useEffect(() => {
     if (userData) {
-      userData?.subscriptionPlan === "Free"
-        ? setShowSubscribe(true)
-        : setShowSubscribe(false);
+      setShowSubscribe(userData?.subscriptionPlan === "Free");
     }
   }, [userData]);
 
@@ -39,9 +37,9 @@ const PreviewComponent = ({ qucikScanData }) => {
         <h3 className="text-xl font-bold text-gray-700 mb-4">Total Vulnerabilities</h3>
         <div className="h-[200px]">
           <BarChart data={severityCountx} />
-          </div>
+        </div>
       </div>
-  
+
       {/* Second Division (2x2 Cards) */}
       <div className="grid grid-cols-2 gap-4">
         {/* Card 1: Quick Scans */}
@@ -55,9 +53,9 @@ const PreviewComponent = ({ qucikScanData }) => {
             </div>
           </div>
         </div>
-  
+
         {/* Card 2: Monitor Scans */}
-        <div className="bg-gradient-to-br from-white to-blue-50 shadow-md rounded-lg p-4  flex flex-col justify-between">
+        <div className="bg-gradient-to-br from-white to-blue-50 shadow-md rounded-lg p-4 flex flex-col justify-between">
           <h3 className="text-lg font-bold text-green-600 mb-2">Monitor Scans</h3>
           <div>
             <div className="text-3xl font-extrabold text-gray-900 mb-1">0</div>
@@ -65,36 +63,39 @@ const PreviewComponent = ({ qucikScanData }) => {
             <div className="text-md font-semibold text-gray-700 mt-2">Scans Left: 20</div>
           </div>
         </div>
-  
+
         {/* Card 3: Placeholder for Timestamp */}
-        <div className="bg-gradient-to-br from-white to-blue-50 shadow-md rounded-lg p-4  flex flex-col justify-between">
+        <div className="bg-gradient-to-br from-white to-blue-50 shadow-md rounded-lg p-4 flex flex-col justify-between">
           <h3 className="text-lg font-bold text-purple-600 mb-2">Last Scan Timestamp</h3>
           <div className="text-2xl font-bold text-gray-900 mt-4">
             {qucikScanData?.lastScanTimestamp || "N/A"}
           </div>
         </div>
-  
+
         {/* Card 4: Subscription Plan */}
-        <div className="bg-gradient-to-br from-white to-blue-50 shadow-md rounded-lg p-4  flex flex-col justify-between">
-          <h3 className="text-lg font-bold text-red-600 mb-2">Subscription Plan</h3>
-          {showSubscribe ? (
-            <button
-              onClick={() => {
-                Upgrade();
-                setShowSubscribe(false);
-              }}
-              className="p-2 text-sm font-bold bg-red-600 text-white border-2 border-red-600 rounded-lg hover:bg-white hover:text-red-600 transition"
-            >
-              Upgrade to Pro
-            </button>
-          ) : (
-            <div className="text-2xl font-extrabold text-gray-900 mt-4">Pro User</div>
-          )}
-        </div>
+        <div className="bg-gradient-to-br from-white to-blue-50 shadow-md rounded-lg p-4 flex flex-col justify-between">
+  <h3 className="text-lg font-bold text-red-600 mb-2">Subscription Plan</h3>
+  {showSubscribe ? (
+    <div className="flex flex-row items-center space-x-2">
+      {/* Free User Label */}
+      <div className="text-xl font-bold text-gray-900">Free User</div>
+      
+      {/* Get Pro Button */}
+      <button
+        onClick={() => Upgrade(setUserData)} // Pass setUserData here
+        className="upgrade-button-db"
+      >
+        Get Pro
+      </button>
+    </div>
+  ) : (
+    <div className="pro">Pro User</div>
+  )}
+</div>
+
       </div>
     </div>
   );
-  
 };
 
 export default PreviewComponent;

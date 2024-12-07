@@ -5,36 +5,37 @@ import Scanner from "../images/iscanner.svg";
 import Report from "../images/report.svg";
 import user from "../images/user-blue.svg";
 import logo from "../images/logo.svg";
-// import { postAPI } from "../helpers/apiRequests";
-// import Cookies from "js-cookie";
-// import { useNavigate } from "react-router-dom";
+import Logout from "../images/Logout.svg";
+import { postAPI } from "../helpers/apiRequests";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 const Sidebar = () => {
   const [isHovered, setIsHovered] = useState(false);
   const location = useLocation(); // Get the current location (URL)
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   // // Helper function to check if the link is active
   const isActive = (path) => location.pathname === path;
-  // const logout = () => {
-  //   postAPI({
-  //     endpoint: "/Users/logout",
-  //     params: {
-  //       token: Cookies.get("token"),
-  //     },
-  //     callback: (response) => {
-  //       if (response.status === 200) {
-  //         // Handle success, e.g., display a success messa
-  //         localStorage.removeItem("userData");
-  //         Cookies.remove("token");
-  //         Cookies.remove("userId");
-  //         navigate("/");
-  //       } else {
-  //         // Handle error response
-  //         console.error(response.data.message);
-  //       }
-  //     },
-  //   });
-  // };
+  const logout = () => {
+    postAPI({
+      endpoint: "/Users/logout",
+      params: {
+        token: Cookies.get("token"),
+      },
+      callback: (response) => {
+        if (response.status === 200) {
+          // Handle success, e.g., display a success messa
+          localStorage.removeItem("userData");
+          Cookies.remove("token");
+          Cookies.remove("userId");
+          navigate("/");
+        } else {
+          // Handle error response
+          console.error(response.data.message);
+        }
+      },
+    });
+  };
   return (
     <div
       className={`fixed top-0 left-0 h-full ${
@@ -73,34 +74,25 @@ const Sidebar = () => {
             <img src={Scanner} alt="Scanner Icon" className="w-6 h-6" />
             {isHovered && <span className="ml-2">Scanner</span>}
           </Link>
-          <Link
-            to="/reports"
-            className={`text-md py-2 px-3 rounded mx-2 w-auto ${
-              isActive("/reports")
-                ? "bg-blue-500 text-white"
-                : "hover:bg-blue-500 hover:text-white"
-            } transition duration-300 flex items-center`}
-          >
-            <img src={Report} alt="report Icon" className="w-6 h-6" />
-            {isHovered && <span className="ml-2">Reports</span>}
-          </Link>
         </div>
-        {/* User at the bottom */}
-        {/* <div onClick={logout}>logout</div> */}
-        <Link
-          to="/user"
-          className={`text-lg py-2 px-3 mx-2 rounded w-auto mt-auto mb-2 ${
-            isActive("/user")
-              ? "bg-blue-500 text-white"
-              : "hover:bg-blue-500 hover:text-white"
-          } transition duration-300 flex items-center`}
-        >
-          <img src={user} alt="Scanner Icon" className="w-6 h-6" />
-          {isHovered && <span className="ml-2">Profile</span>}
-        </Link>
+        <div className="flex items-center mt-auto mb-2"> 
+            <Link to="/user" 
+          className={`text-lg py-1 px-3 mx-1 rounded w-auto mt-auto mb-5 ${ 
+            isActive("/user") ? "bg-blue-500 text-white" : "hover:bg-blue-500 hover:text-white" 
+            } 
+            transition duration-300 flex items-center`} > 
+        <img src={user} alt="Scanner Icon" className="w-6 h-6" />
+        {isHovered && <span className="ml-2">Profile</span>}
+         </Link> 
+        <button type="button" 
+        onClick={logout} onMouseEnter={() => setIsHovered(true)} 
+        onMouseLeave={() => setIsHovered(false)}
+         className="text-white py-6 px-2 rounded-md flex items-center mr-4" > 
+         <img src={Logout} alt="Logout Icon" className="w-6 h-6" />
+          </button> 
+         </div>
       </div>
     </div>
   );
 };
-
 export default Sidebar;

@@ -86,3 +86,110 @@
   body {
     font-family: 'K2D';
   }
+
+  @keyframes shimmer {
+    to {
+      background-position-x: 0%;
+    }
+  }
+  
+  .pro {
+    height: 50px; /* Adjusted height */
+    width: 200px; /* Adjusted width */
+    background: linear-gradient(
+      -45deg,
+      #ffd700 25%, /* Goldish yellow */
+      #ffef8b 50%, /* Light golden */
+      #ffd700 75%
+    );
+    background-size: 400%;
+    background-position-x: 100%;
+    animation: shimmer 1.5s infinite linear; /* Infinite animation for shimmer */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    color: #fff; /* White text */
+    font-weight: bold;
+    border-radius: 10px; /* Slightly rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Add a soft shadow for depth */
+    padding: 0 10px; /* Padding for better text placement */
+  }
+  
+
+  @keyframes shimmer {
+    to {
+      background-position-x: 0%;
+    }
+  }
+  
+  /* Free User Badge */
+  .free-user {
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #1d4ed8; /* Rich blue */
+    text-transform: uppercase;
+    border: 2px solid #3b82f6; /* Slightly darker blue for border */
+    border-radius: 12px; /* Rounded edges */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    letter-spacing: 1.5px;
+  }
+  
+  /* Upgrade Button */
+  .upgrade-button {
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #fff; /* White text */
+    background: linear-gradient(
+      -45deg,
+      #ffd700 25%, /* Goldish yellow */
+      #ffef8b 50%, /* Light golden */
+      #ffd700 75%
+    );
+    background-size: 400%;
+    background-position-x: 100%;
+    animation: shimmer 1.5s infinite linear; /* Infinite shimmer effect */
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+  
+  .upgrade-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Hover effect for depth */
+  }
+  
+
+  .upgrade-button-db {
+    padding: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #fff; /* White text */
+    background: linear-gradient(
+      -45deg,
+      #ffd700 25%, /* Goldish yellow */
+      #ffef8b 50%, /* Light golden */
+      #ffd700 75%
+    );
+    background-size: 400%;
+    background-position-x: 100%;
+    animation: shimmer 1.5s infinite linear; /* Infinite shimmer effect */
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+  
+  
+  /* Hover effect */
+  .upgrade-button-db:hover {
+    transform: scale(1.05); /* Slight zoom */
+    box-shadow: 0 4px 10px rgba(255, 215, 0, 0.6); /* Glowing gold shadow */
+  }
+  

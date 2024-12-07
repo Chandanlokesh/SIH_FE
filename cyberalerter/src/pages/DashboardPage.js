@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Sidebar from '../components/sidebar';
 import Header from '../components/Header';
 import PreviewComponent from '../components/DashboardPage';
-import HistoryComponent from '../components/History';
+import HistoryComponent from '../components/history/History';
 import { useEffect } from 'react';
 import { getAPI } from '../helpers/apiRequests';
 import Cookies from 'js-cookie';

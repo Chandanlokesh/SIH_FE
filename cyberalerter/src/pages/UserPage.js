@@ -1,38 +1,10 @@
 import { useEffect, useState } from "react";
-import { getAPI, postAPI, Upgrade } from "../helpers/apiRequests";
+import { Upgrade } from "../helpers/apiRequests";
 import Sidebar from "../components/sidebar";
-import Cookies from "js-cookie";
-import { useNavigate, useLocation } from "react-router-dom";
 
 const UserPage = () => {
   const storedData = localStorage.getItem("userData");
   const [userData, setUserData] = useState(null);
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  // Helper function to check if the link is active
-  const isActive = (path) => location.pathname === path;
-
-  const logout = () => {
-    postAPI({
-      endpoint: "/Users/logout",
-      params: {
-        token: Cookies.get("token"),
-      },
-      callback: (response) => {
-        if (response.status === 200) {
-          // Handle success, e.g., display a success message
-          localStorage.removeItem("userData");
-          Cookies.remove("token");
-          Cookies.remove("userId");
-          navigate("/");
-        } else {
-          // Handle error response
-          console.error(response.data.message);
-        }
-      },
-    });
-  };
 
   useEffect(() => {
     if (storedData) {
@@ -40,78 +12,78 @@ const UserPage = () => {
     }
   }, [storedData]);
 
+  const getInitials = (name) => {
+    return name
+      ? name
+          .split(" ")
+          .map((word) => word[0])
+          .join("")
+          .toUpperCase()
+      : "";
+  };
+
   return (
     <div className="flex h-screen">
       {/* Sidebar on the left */}
-      <Sidebar isActive={isActive} />
-      
-      {/* Main content on the right */}
-      <div className="flex-1 ml-24 p-6 mr-20 w-1/2"> {/* Adjusted width to make it less wide */}
-        {/* Header at the top */}
-        <h2 className="text-2xl font-bold mb-4">User Information</h2>
-        {userData ? (
-          <form className="space-y-4">
-            <div>
-              <label className="block text-sm font-semibold mb-2">Username</label>
-              <input
-                type="text"
-                value={userData.username}
-                readOnly
-                className="w-full p-2 border rounded-md"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-semibold mb-2">Email</label>
-              <input
-                type="email"
-                value={userData.email}
-                readOnly
-                className="w-full p-2 border rounded-md"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-semibold mb-2">Subscription Plan</label>
-              <input
-                type="text"
-                value={userData.subscriptionPlan}
-                readOnly
-                className="w-full p-2 border rounded-md"
-              />
+      <Sidebar />
 
-              {userData.subscriptionPlan=="Free" && <button onclick={Upgrade()}className="text-green-500 border-2 border-green-800 hover:text-green hover:bg-green-200">
-                 upgrade to Pro now
-              </button>}
+      {/* Main content on the right */}
+      <div className="flex-1 flex justify-center items-center bg-gray-100">
+        {userData ? (
+          <div className="w-full max-w-4xl bg-white rounded-2xl shadow-lg p-8 flex">
+            {/* Left Division */}
+            <div className="w-1/3 flex flex-col items-center space-y-6">
+              {/* User Avatar */}
+              <div className="flex justify-center items-center w-24 h-24 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white text-3xl font-bold shadow-md">
+                {getInitials(userData.username)}
+              </div>
+
+              {/* Username */}
+              <h2 className="text-xl font-bold text-gray-800">{userData.username}</h2>
+
+              {/* Subscription Status */}
+              {userData.subscriptionPlan === "Pro" ? (
+                <div className="pro">
+                  Pro User
+                </div>
+              ) : (
+                <div className="flex flex-col items-center space-y-4">
+                  <div className="free-user">
+                    Free User
+                  </div>
+                  <button
+                    onClick={() => Upgrade(setUserData)}  // Pass setUserData here
+                    className="upgrade-button"
+                  >
+                    Upgrade to Pro Now
+                  </button>
+                </div>
+              )}
             </div>
-            <div>
-              <label className="block text-sm font-semibold mb-2">Quick Scan Limit</label>
-              <input
-                type="number"
-                value={userData.scanLimit.quickScan}
-                readOnly
-                className="w-full p-2 border rounded-md"
-              />
+
+            {/* Right Division */}
+            <div className="w-2/3 space-y-6">
+              <h3 className="text-2xl font-semibold text-gray-800">User Details</h3>
+              <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm font-semibold text-gray-600">Email:</span>
+                  <span className="text-gray-800">{userData.email}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm font-semibold text-gray-600">Quick Scan Limit:</span>
+                  <span className="text-gray-800">{userData.scanLimit.quickScan}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm font-semibold text-gray-600">
+                    Quick Scans Performed Today:
+                  </span>
+                  <span className="text-gray-800">{userData.scansPerformedToday.quickScan}</span>
+                </div>
+              </div>
             </div>
-            <div>
-              <label className="block text-sm font-semibold mb-2">Quick Scans Performed Today</label>
-              <input
-                type="number"
-                value={userData.scansPerformedToday.quickScan}
-                readOnly
-                className="w-full p-2 border rounded-md"
-              />
-            </div>
-            <div>
-              <button
-                type="button"
-                onClick={logout}
-                className="bg-blue-500 text-white py-2 px-4 rounded-md"
-              >
-                Logout
-              </button>
-            </div>
-          </form>
+          </div>
         ) : (
-          <p>Loading user data...</p>
+          <p className="text-gray-600 text-center">Loading user data...</p>
         )}
       </div>
     </div>

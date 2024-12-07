@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import { postAPI } from "../helpers/apiRequests";
 import Cookies from 'js-cookie';
 
+import startImg from "../images/scan_page/start-a-scrape.png";
+import loadingGif from "../images/scan_page/scrape-progress.gif";
+import errorImg from "../images/scan_page/image.png";
+
 const QuickScan = () => {
   // State variables for form inputs
   const [productName, setProductName] = useState("apache");
@@ -11,7 +15,7 @@ const QuickScan = () => {
   const [error, setError] = useState("");
   const [scanId, setScanId] = useState("");
   const [expandedIndex, setExpandedIndex] = useState(null);
-
+  const [scanStatus, setScanStatus] = useState("idle");
   const toggleCollapse = (index) => {
     setExpandedIndex(expandedIndex === index ? null : index);
   };
@@ -36,6 +40,8 @@ const QuickScan = () => {
       setError("Product Name is required");
       return;
     }
+    setJsonData(null);
+    setScanStatus("loading");
     setError("");
     postAPI({
       endpoint: "/quickscan/scan",
@@ -49,9 +55,11 @@ const QuickScan = () => {
         if (response.status === 200) {
           setJsonData(response.data.scanResults);
           setScanId(response.data.scanId);
+          setScanStatus("idle");
         } else {
           // Handle error response
           setError(response.data.message);
+          setScanStatus("failed");
         }
       },
     });
@@ -142,6 +150,7 @@ const QuickScan = () => {
 
   {/* Right side - JSON Data Display */}
   <div className={`flex-1  border-l-[4px]`}>
+         
     {jsonData ? (
       <div className="flex flex-col ml-2 h-full">
   <div className="flex justify-between items-center mb-2">
@@ -175,7 +184,8 @@ const QuickScan = () => {
         severityColor = 'bg-green-100'; severityText='text-green-700'; severityBorder='border-green-500';
         break;
       default:
-        severityColor = 'bg-gray-100'; severityText='text-gray-700'; severityBorder='border-gray-500';
+        severityColor = 'bg-pink-100'; severityText='text-pink-700'; severityBorder='border-pink-500';
+
     }
   
  return (
@@ -217,10 +227,16 @@ const QuickScan = () => {
       )}
   </div>
 </div>
-
-    ) : (
-      <p className="text-gray-600 pl-4">No scan data available.</p>
-    )}
+    ):
+    <div className="items-center justify-center flex h-full">
+      {scanStatus === "loading" ? (<>
+      <img src={loadingGif} alt="Loading..." className="h-64 w-64" /></>):
+         (scanStatus === "failed" ? <img src={errorImg} alt="Error" className="h-64 w-100" />:
+           <img src={startImg} alt="Start Scan" className="h-64 w-64" />)
+         
+         }
+       </div>
+       }
   </div>
 </div>
 
