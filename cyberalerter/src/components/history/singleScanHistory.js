@@ -107,9 +107,7 @@ filteredProducts.map((scan, index) => {
                 severityBorder = "border-green-700";
                 break;
               default:
-                severityColor = "bg-[#F2BDC2]";
-                severityText = "text-black";
-                severityBorder = "border-pink-700";
+                severityColor = 'bg-[#3786A2]'; severityText='text-white'; severityBorder='border-[#3786A2]';
             }
 
             return (
@@ -141,9 +139,12 @@ filteredProducts.map((scan, index) => {
                   <p>
                     <b>Base Score:</b> {result.baseScore}
                   </p>
+                  
+                  {result.baseSeverity &&
                   <p>
-                    <b>Severity:</b> {result.baseSeverity}
-                  </p>
+                  <b>Severity:</b> {result.baseSeverity}
+                 
+                  </p>}
                   <p>
                     <b>OEM URL:</b>{" "}
                     <a

@@ -171,7 +171,7 @@ const QuickScan = () => {
         severityColor = 'bg-green-100'; severityText='text-green-700'; severityBorder='border-green-500';
         break;
       default:
-        severityColor = 'bg-pink-100'; severityText='text-pink-700'; severityBorder='border-pink-500';
+        severityColor = 'bg-[#8AE0FF]'; severityText='text-[#3786A2]'; severityBorder='border-[3786A2]';
 
     }
   
