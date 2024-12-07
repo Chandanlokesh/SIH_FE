@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import LoginComponent from '../components/LoginSignup/LoginComponent';
 import SignUpComponent from '../components/LoginSignup/SignUpComponent';
-import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
 import Frame1 from '../images/IMG1.svg';
 import Frame2 from '../images/IMG2.svg';
@@ -9,8 +8,8 @@ import Frame3 from '../images/IMG3.svg';
 import Frame4 from '../images/IMG4.svg';
 import Frame5 from '../images/IMG5.svg';
 import '../styles/App.css';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const LoginPage = () => {
   const [isSignUp, setIsSignUp] = useState(false);
