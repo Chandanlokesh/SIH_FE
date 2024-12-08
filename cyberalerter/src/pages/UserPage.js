@@ -69,10 +69,10 @@ const UserPage = () => {
                   <span className="text-sm font-semibold text-gray-600">Email:</span>
                   <span className="text-gray-800">{userData.email}</span>
                 </div>
-                <div className="flex justify-between items-center">
+                {/* <div className="flex justify-between items-center">
                   <span className="text-sm font-semibold text-gray-600">Quick Scan Limit:</span>
                   <span className="text-gray-800">{userData.scanLimit.quickScan}</span>
-                </div>
+                </div> */}
                 <div className="flex justify-between items-center">
                   <span className="text-sm font-semibold text-gray-600">
                     Quick Scans Performed Today:

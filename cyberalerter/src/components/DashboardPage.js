@@ -48,9 +48,9 @@ const PreviewComponent = ({ qucikScanData }) => {
           <div>
             <div className="text-3xl font-extrabold text-gray-900 mb-1">{qucikScanData?.scansToday || 0}</div>
             <p className="text-sm text-gray-500">Today</p>
-            <div className="text-md font-semibold text-gray-700 mt-2">
+            {/* <div className="text-md font-semibold text-gray-700 mt-2">
               Scans Left: {qucikScanData?.scansLeftToday <0 ? 0 : qucikScanData?.scansLeftToday}
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -60,7 +60,7 @@ const PreviewComponent = ({ qucikScanData }) => {
           <div>
             <div className="text-3xl font-extrabold text-gray-900 mb-1">0</div>
             <p className="text-sm text-gray-500">Today</p>
-            <div className="text-md font-semibold text-gray-700 mt-2">Scans Left: 20</div>
+            {/* <div className="text-md font-semibold text-gray-700 mt-2">Scans Left: 20</div> */}
           </div>
         </div>
 

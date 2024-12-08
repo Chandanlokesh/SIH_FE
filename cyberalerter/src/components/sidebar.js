@@ -1,21 +1,22 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom"; // Import useLocation for route checking
+import { Link, useLocation } from "react-router-dom";
 import Dashboard from "../images/dashboard.svg";
 import Scanner from "../images/iscanner.svg";
-import Report from "../images/report.svg";
 import user from "../images/user-blue.svg";
-import logo from "../images/logo.svg";
+import chatbot from "../images/chatbot-icon.svg"
+import logo from "../images/logo/logo_over_black.svg";
 import Logout from "../images/Logout.svg";
 import { postAPI } from "../helpers/apiRequests";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+
 const Sidebar = () => {
   const [isHovered, setIsHovered] = useState(false);
-  const location = useLocation(); // Get the current location (URL)
+  const location = useLocation();
   const navigate = useNavigate();
 
-  // // Helper function to check if the link is active
   const isActive = (path) => location.pathname === path;
+
   const logout = () => {
     postAPI({
       endpoint: "/Users/logout",
@@ -24,18 +25,17 @@ const Sidebar = () => {
       },
       callback: (response) => {
         if (response.status === 200) {
-          // Handle success, e.g., display a success messa
           localStorage.removeItem("userData");
           Cookies.remove("token");
           Cookies.remove("userId");
           navigate("/");
         } else {
-          // Handle error response
           console.error(response.data.message);
         }
       },
     });
   };
+
   return (
     <div
       className={`fixed top-0 left-0 h-full ${
@@ -45,12 +45,12 @@ const Sidebar = () => {
       onMouseLeave={() => setIsHovered(false)}
     >
       <div className="flex flex-col justify-between h-full pt-6">
-        {/* Logo at the top */}
+        {/* Logo */}
         <div className="text-3xl px-4 font-bold tracking-wider">
-          <img src={logo} alt="Dashboard Icon" className="w-7 h-7" />{" "}
+          <img src={logo} alt="Dashboard Icon" className="w-12 h-12" />
         </div>
 
-        {/* Navigation links */}
+        {/* Navigation Links */}
         <div className="flex flex-col space-y-8 mt-20">
           <Link
             to="/dashboard"
@@ -74,25 +74,46 @@ const Sidebar = () => {
             <img src={Scanner} alt="Scanner Icon" className="w-6 h-6" />
             {isHovered && <span className="ml-2">Scanner</span>}
           </Link>
+          <Link
+            to="/chatbot"
+            className={`text-md py-2 px-3 rounded mx-2 w-auto ${
+              isActive("/chatbot") && !isHovered
+                ? "bg-blue-500 text-white"
+                : "hover:bg-blue-500 hover:text-white"
+            } transition duration-300 flex items-center`}
+          >
+            <img src={chatbot} alt="Chatbot Icon" className="w-6 h-6" />
+            {isHovered && <span className="ml-2">Chatbot</span>}
+          </Link>
         </div>
-        <div className="flex items-center mt-auto mb-2"> 
-            <Link to="/user" 
-          className={`text-lg py-1 px-3 mx-1 rounded w-auto mt-auto mb-5 ${ 
-            isActive("/user") ? "bg-blue-500 text-white" : "hover:bg-blue-500 hover:text-white" 
-            } 
-            transition duration-300 flex items-center`} > 
-        <img src={user} alt="Scanner Icon" className="w-6 h-6" />
-        {isHovered && <span className="ml-2">Profile</span>}
-         </Link> 
-        <button type="button" 
-        onClick={logout} onMouseEnter={() => setIsHovered(true)} 
-        onMouseLeave={() => setIsHovered(false)}
-         className="text-white py-6 px-2 rounded-md flex items-center mr-4" > 
-         <img src={Logout} alt="Logout Icon" className="w-6 h-6" />
-          </button> 
-         </div>
+
+        {/* User and Logout Row */}
+        <div className="flex items-center justify-between mt-auto px-2 pb-4">
+          {/* User Icon */}
+          <Link
+            to="/user"
+          >
+            <img
+              src={user}
+              alt="User Icon"
+             className="text-white p-2 rounded-full flex items-center justify-center transform transition-transform duration-300 hover:scale-110"
+            />
+          </Link>
+
+          {/* Logout Icon */}
+          {isHovered && (
+            <button
+              type="button"
+              onClick={logout}
+              className="text-white bg-blue-800 p-2 rounded-full flex items-center justify-center transform transition-transform duration-300 hover:scale-110"
+            >
+              <img src={Logout} alt="Logout Icon" className="w-6 h-6" />
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
 };
+
 export default Sidebar;
