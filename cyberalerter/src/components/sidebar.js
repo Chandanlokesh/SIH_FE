@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import Dashboard from "../images/dashboard.svg";
 import Scanner from "../images/iscanner.svg";
 import user from "../images/user-blue.svg";
-import chatbot from "../images/chatbot-icon.svg"
+import chatbot from "../images/chatbot-icon.svg";
 import logo from "../images/logo/logo_over_black.svg";
 import Logout from "../images/Logout.svg";
 import { postAPI } from "../helpers/apiRequests";
@@ -39,80 +39,85 @@ const Sidebar = () => {
   return (
     <div
       className={`fixed top-0 left-0 h-full ${
-        isHovered ? "w-40 shadow-lg" : "w-16"
-      } bg-gray-900 text-white z-50 transition-all duration-300`}
+        isHovered ? "w-48 shadow-xl" : "w-16"
+      } bg-black text-white transition-all duration-300 z-[998]`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="flex flex-col justify-between h-full pt-6">
-        {/* Logo */}
-        <div className="text-3xl px-4 font-bold tracking-wider">
-          <img src={logo} alt="Dashboard Icon" className="w-12 h-12" />
+      <div className="flex flex-col justify-between h-full relative">
+        {/* Logo Section */}
+        <div className="flex items-center justify-left py-4 ml-3">
+          <img src={logo} alt="Logo" className="w-10 h-10" />
         </div>
 
         {/* Navigation Links */}
-        <div className="flex flex-col space-y-8 mt-20">
-          <Link
+        <div className="flex flex-col space-y-6 mt-10">
+          <NavItem
             to="/dashboard"
-            className={`text-md py-2 px-3 rounded mx-2 w-auto ${
-              isActive("/dashboard") && !isHovered
-                ? "bg-blue-500 text-white"
-                : "hover:bg-blue-500 hover:text-white"
-            } transition duration-300 flex items-center`}
-          >
-            <img src={Dashboard} alt="Dashboard Icon" className="w-6 h-6" />
-            {isHovered && <span className="ml-2">Dashboard</span>}
-          </Link>
-          <Link
+            icon={Dashboard}
+            label="Dashboard"
+            isHovered={isHovered}
+            isActive={isActive("/dashboard")}
+          />
+          <NavItem
             to="/scan"
-            className={`text-md py-2 px-3 rounded mx-2 w-auto ${
-              isActive("/scan") && !isHovered
-                ? "bg-blue-500 text-white"
-                : "hover:bg-blue-500 hover:text-white"
-            } transition duration-300 flex items-center`}
-          >
-            <img src={Scanner} alt="Scanner Icon" className="w-6 h-6" />
-            {isHovered && <span className="ml-2">Scanner</span>}
-          </Link>
-          <Link
+            icon={Scanner}
+            label="Scanner"
+            isHovered={isHovered}
+            isActive={isActive("/scan")}
+          />
+          <NavItem
             to="/chatbot"
-            className={`text-md py-2 px-3 rounded mx-2 w-auto ${
-              isActive("/chatbot") && !isHovered
-                ? "bg-blue-500 text-white"
-                : "hover:bg-blue-500 hover:text-white"
-            } transition duration-300 flex items-center`}
-          >
-            <img src={chatbot} alt="Chatbot Icon" className="w-6 h-6" />
-            {isHovered && <span className="ml-2">Chatbot</span>}
-          </Link>
+            icon={chatbot}
+            label="Chatbot"
+            isHovered={isHovered}
+            isActive={isActive("/chatbot")}
+          />
         </div>
 
-        {/* User and Logout Row */}
-        <div className="flex items-center justify-between mt-auto px-2 pb-4">
-          {/* User Icon */}
-          <Link
-            to="/user"
-          >
+        {/* Logout Icon Fixed at Bottom-Right */}
+        {isHovered && (
+  <button
+    onClick={logout}
+    className="absolute bottom-4 right-4 p-2 rounded-full flex items-center justify-center transform transition-all duration-300 ease-in-out hover:scale-110 cursor-pointer opacity-0 hover:opacity-100 z-[999]"
+    style={{
+      opacity: isHovered ? 1 : 0,
+      transition: "opacity 0.3s ease-in-out, transform 0.3s ease-in-out",
+    }}
+  >
+    <img src={Logout} alt="Logout Icon" className="w-6 h-6" />
+  </button>
+)}
+
+        {/* User Icon */}
+        <div className="mt-auto mb-4 flex items-center justify-start ml-3">
+          <Link to="/user">
             <img
               src={user}
               alt="User Icon"
-             className="text-white p-2 rounded-full flex items-center justify-center transform transition-transform duration-300 hover:scale-110"
+              className="w-10 h-10 rounded-full bg-black transform bg-black transition-transform duration-300 hover:scale-110"
             />
           </Link>
-
-          {/* Logout Icon */}
-          {isHovered && (
-            <button
-              type="button"
-              onClick={logout}
-              className="text-white bg-blue-800 p-2 rounded-full flex items-center justify-center transform transition-transform duration-300 hover:scale-110"
-            >
-              <img src={Logout} alt="Logout Icon" className="w-6 h-6" />
-            </button>
-          )}
         </div>
       </div>
     </div>
+  );
+};
+
+// Reusable Navigation Item Component
+const NavItem = ({ to, icon, label, isHovered, isActive }) => {
+  return (
+    <Link
+      to={to}
+      className={`flex items-center space-x-3 px-3 mx-1 py-2 transition-all duration-300  rounded-md ${
+        isActive
+          ? "bg-blue-500 text-white"
+          : "hover:bg-blue-600 hover:text-white"
+      }`}
+    >
+      <img src={icon} alt={`${label} Icon`} className="w-6 h-6" />
+      {isHovered && <span className="text-sm font-medium">{label}</span>}
+    </Link>
   );
 };
 
