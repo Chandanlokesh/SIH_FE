@@ -7,7 +7,7 @@ const Chatbot = () => {
       <Sidebar />
 
       {/* Main content on the right */}
-      <div className="flex-1 flex justify-center items-center page-">
+      <div className="flex-1 flex justify-center items-center ">
         <div className="w-full max-w-4xl bg-white rounded-2xl p-8">
           <h2 className="text-xl font-bold text-gray-800 mb-4">Cybersecurity Chatbot</h2>
           <iframe
