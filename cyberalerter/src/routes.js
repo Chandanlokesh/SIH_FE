@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import ScanPage from './pages/ScanPage';
 import UserPage from './pages/UserPage';
+import Chatbot from './pages/chatbot';
 
 const AppRoutes = () => (
   <Router>
@@ -14,6 +15,7 @@ const AppRoutes = () => (
       <Route path="/dashboard" element={<DashboardPage />} />
       <Route path="/scan" element={<ScanPage />} />
       <Route path="/user" element={<UserPage />} />
+      <Route path="/chatbot" element={<Chatbot/>}/>
     </RouterRoutes>
   </Router>
 );
