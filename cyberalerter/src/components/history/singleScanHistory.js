@@ -8,8 +8,8 @@ const QuickScanHistoryComponent = ({ qucikScanData = [] }) => {
     product.productName.toLowerCase().includes(searchQuery.toLowerCase()) 
   );
   return  (
-    <div className='max-h-[90vh]'>
-      <div className="bg-white shadow-md rounded-lg p-2 ">
+    <div className='max-h-[90vh] text-white'>
+      <div className="bg-[#171520] shadow-md rounded-lg p-2 ">
       <div className="flex items-center justify-between mb-2 pb-2 border-b-2 ">
     <h4 className="font-bold text-lg">Quick Scan History</h4>
     <div className="flex items-center w-[40%]">
@@ -18,7 +18,7 @@ const QuickScanHistoryComponent = ({ qucikScanData = [] }) => {
         type="text"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
-        className="p-1 border rounded-md flex-1"
+        className="p-1 border rounded-md border-gray-800 flex-1 bg-black text-gray-300"
         placeholder="Search..."
       />
     </div>
@@ -41,8 +41,8 @@ filteredProducts.map((scan, index) => {
     <div key={index} id={`scan-${index}`}>
       {/* Collapsible Bar */}
       <div
-        className={`flex justify-between items-center p-2 border-b-2 border-b-[#91D5FF] cursor-pointer hover:bg-[#E6F7FF]  ${
-          expandedIndex === index && "bg-[#E6F7FF]"
+        className={`flex justify-between items-center p-2 border-b-2 border-b-[#91D5FF] cursor-pointer hover:bg-[#090051]  ${
+          expandedIndex === index && "bg-[#090051]"
         }`}
         onClick={() => setExpandedIndex(expandedIndex === index ? null : index)}
       >

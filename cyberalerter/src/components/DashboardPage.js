@@ -170,95 +170,93 @@ const PreviewComponent = ({ qucikScanData, lineChartData, doughnutChartData }) =
       {/* Row 1: Cards */}
  {/* Row 1: Smaller Cards */}
  <div className="grid grid-cols-5 gap-4">
-   {/* Card 1: Quick Scans */}
-   <div className="bg-white shadow-md rounded-lg py-2 px-3 flex justify-between items-end h-[100px] group hover:bg-blue-700 transition-colors duration-300">
+  {/* Card 1: Quick Scans */}
+  <div className="  shadow-md rounded-lg p-2 border-[1px] border-gray-700 py-2 px-3 flex justify-between items-end h-[100px] group hover:bg-blue-600 transition-colors duration-300">
     <div className="text-left">
-      <p className="text-sm text-gray-500 group-hover:text-white">Today</p>
-      <h3 className="text-xl font-bold group-hover:text-white">Quick <br /> Scans</h3>
+      <p className="text-sm text-gray-400 text-white">Today</p>
+      <h3 className="text-xl font-bold text-white">Quick <br /> Scans</h3>
     </div>
-    <div className="text-[65px] text-gray-900 group-hover:text-white">{qucikScanData?.scansToday || 12}</div>
+    <div className="text-[65px] text-gray-300 text-white">{qucikScanData?.scansToday || 12}</div>
   </div>
 
   {/* Card 2: Monitor Scans */}
-  <div className="bg-white shadow-md rounded-lg py-2 px-3 flex justify-between items-end h-[100px] group hover:bg-blue-700 transition-colors duration-300">
+  <div className="  shadow-md rounded-lg p-2 border-[1px] border-gray-700 py-2 px-3 flex justify-between items-end h-[100px] group hover:bg-blue-600 transition-colors duration-300">
     <div className="text-left">
-      <span className="text-sm text-gray-500 group-hover:text-white">Total</span>
-      <h3 className="text-xl font-bold group-hover:text-white">Monitor <br /> Scans</h3>
+      <span className="text-sm text-gray-400 text-white">Total</span>
+      <h3 className="text-xl font-bold text-white">Monitor <br /> Scans</h3>
     </div>
-    <div className="text-[65px] text-gray-900 group-hover:text-white">7</div>
+    <div className="text-[65px] text-gray-300 text-white">7</div>
   </div>
 
   {/* Card 3: Notifications Sent */}
-  <div className="bg-white shadow-md rounded-lg py-2 px-3 flex justify-between items-end h-[100px] group hover:bg-blue-700 transition-colors duration-300">
+  <div className="  shadow-md rounded-lg p-2 border-[1px] border-gray-700 py-2 px-3 flex justify-between items-end h-[100px] group hover:bg-blue-600 transition-colors duration-300">
     <div className="text-left">
-      <h3 className="text-xl font-bold group-hover:text-white">Notifications <br /> Received</h3>
+      <h3 className="text-xl font-bold text-white">Notifications <br /> Received</h3>
     </div>
-    <div className="text-[65px] text-gray-900 group-hover:text-white">{qucikScanData?.notificationSent || 7}</div>
+    <div className="text-[65px] text-gray-300 text-white">{qucikScanData?.notificationSent || 7}</div>
   </div>
 
   {/* Card 4: Total Products Monitored */}
-  <div className="bg-white shadow-md rounded-lg py-2 px-3 flex justify-between items-end h-[100px] group hover:bg-blue-700 transition-colors duration-300">
+  <div className="  shadow-md rounded-lg p-2 border-[1px] border-gray-700 py-2 px-3 flex justify-between items-end h-[100px] group hover:bg-blue-600 transition-colors duration-300">
     <div className="text-left">
-      <h3 className="text-xl font-bold group-hover:text-white">Total Products<br />Being Monitored</h3>
+      <h3 className="text-xl font-bold text-white">Total Products<br />Being Monitored</h3>
     </div>
-    <div className="text-[65px] text-gray-900 group-hover:text-white">{qucikScanData?.notificationSent || 12}</div>
+    <div className="text-[65px] text-gray-300 text-white">{qucikScanData?.notificationSent || 12}</div>
   </div>
 
   {/* Card 5: Subscription Plan */}
-  <div className="bg-white shadow-md rounded-lg py-2 px-3 flex justify-between items-end h-[100px] hover:bg-blue-700 hover:text-white transition-colors duration-300">
-  <div className="flex flex-col justify-start text-left">
-    
-    <h3 className="text-xl font-bold mb-1 hover:text-white ">Subscription <br/> Plan</h3>
-    {showSubscribe && (
-      <button
-        onClick={() => Upgrade(setUserData)}
-        className="upgrade-button-db"
-      >
-        Upgrade to Pro
-      </button>
-     )} 
+  <div className="  shadow-md rounded-lg p-2 border-[1px] border-gray-700 py-2 px-3 flex justify-between items-end h-[100px] hover:bg-blue-600 hover:text-white transition-colors duration-300">
+    <div className="flex flex-col justify-start text-left">
+      <h3 className="text-xl font-bold mb-1 text-white">Subscription <br /> Plan</h3>
+      {showSubscribe && (
+        <button
+          onClick={() => Upgrade(setUserData)}
+          className="text-sm bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded-md"
+        >
+          Upgrade to Pro
+        </button>
+      )}
+    </div>
+    <div className="flex items-center">
+      {showSubscribe ? (
+        <div className="text-sm font-bold text-gray-400">Free <br /> User</div>
+      ) : (
+        <div className="text-sm font-bold text-green-500">Pro <br /> User</div>
+      )}
+    </div>
   </div>
-  <div className="flex items-center">
-    {showSubscribe ? (
-      <div className="free-user">Free <br/> User</div>
-     ) : (
-      <div className="pro-db text-[20px]">Pro <br/> User</div>
-    )} 
+</div>
+
+{/* Row 2: Charts */}
+<div className="grid grid-cols-3 gap-4">
+  {/* Bar Chart */}
+  <div className="  shadow-md rounded-lg p-2 border-[1px] border-gray-700 h-full">
+    <h3 className="text-xl font-bold text-gray-300 mb-4">Vulnerabilities in QuickScan</h3>
+    <div className="h-[80%] w-full">
+      <BarChart data={severityCountx} />
+    </div>
+  </div>
+
+  {/* Line Chart */}
+  <div className="  shadow-md rounded-lg p-2 border-[1px] border-gray-700 h-full">
+    <h3 className="text-xl font-bold text-gray-300 mb-4">Vulnerabilities Over Time</h3>
+    <div className="h-[80%]">
+      <LineChart data={lineChartData} />
+    </div>
+  </div>
+
+  {/* Doughnut Chart */}
+  <div className="  shadow-md rounded-lg p-2 border-[1px] border-gray-700 h-full">
+    <div className="flex justify-between items-center mb-2">
+      <h3 className="text-xl font-bold text-gray-300">Vulnerabilities by Product</h3>
+      <div className="text-lg font-semibold text-gray-300">Products</div>
+    </div>
+    <div className="h-[80%]">
+      <DoughnutChart data={doughnutChartData} />
+    </div>
   </div>
 </div>
 
-</div>
-
-
-      {/* Row 2: Charts */}
-      <div className="grid grid-cols-3 gap-4">
-        {/* Bar Chart */}
-        <div className="bg-white shadow-md rounded-lg p-2 border-[1px] border-gray h-full">
-          <h3 className="text-xl font-bold text-gray-700 mb-4">Vulnerabilities in QuickScan</h3>
-          <div className="h-[80%] w-full">
-            <BarChart data={severityCountx} />
-          </div>
-        </div>
-
-        {/* Line Chart */}
-        <div className="bg-white shadow-md rounded-lg p-2 border-[1px] border-gray h-full">
-          <h3 className="text-xl font-bold text-gray-700 mb-4">Vulnerabilities Over Time</h3>
-          <div className="h-[80%]">
-            <LineChart data={lineChartData} />
-          </div>
-        </div>
-
-        {/* Doughnut Chart */}
-        <div className="bg-white shadow-md rounded-lg p-2 border-[1px] border-gray h-full">
-  <div className="flex justify-between items-center mb-2 ">
-    <h3 className="text-xl font-bold text-gray-700">Vulnerabilities by Product</h3>
-    <div className="text-lg font-semibold text-gray-900">Products</div>
-  </div>
-  <div className="h-[80%]">
-    <DoughnutChart data={doughnutChartData} />
-  </div>
-</div>
-      </div>
     </div>
   );
 };

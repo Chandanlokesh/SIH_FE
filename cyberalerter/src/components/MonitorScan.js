@@ -144,19 +144,6 @@ const MonitorScanComponent = () => {
             disabled={!selectedVendor}
           />
         </div>
-
-        {/* <div>
-          <label className="block text-gray-800 font-semibold">Product Version:</label>
-          <input
-            type="text"
-            value={productVersion}
-            onChange={(e) => setProductVersion(e.target.value)}
-            placeholder="Enter product version (optional)"
-            className={`w-full p-2 border rounded-md ${!selectedVendor && "bg-gray-200"}`}
-            disabled={!selectedVendor}
-          />
-        </div> */}
-
         <div className="flex space-x-4 justify-end">
           <button
             type="button"

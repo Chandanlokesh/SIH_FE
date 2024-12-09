@@ -20,7 +20,7 @@ const HistoryComponent = ({ qucikScanData = [] }) => {
      <div>
   <h3 
     id="history" 
-    className="cursor-pointer text-2xl font-bold hover:text-blue-800" 
+    className="cursor-pointer text-2xl font-bold text-white hover:text-blue-800" 
     onClick={() => window.scrollTo(0, 0)}
   >
     <a href={"#history"}>History</a>

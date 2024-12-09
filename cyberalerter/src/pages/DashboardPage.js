@@ -43,30 +43,32 @@ const DashboardPage = () => {
   }
 
   return (
-    <div className="flex h-screen bg-gray-300">
+    <div className="flex h-screen bg-[#181818]">
       {/* Sidebar on the left */}
       <Sidebar />
-
+  
       {/* Main content on the right */}
-      <div className="flex-1 ml-16 flex flex-col ">
+      <div className="flex-1 ml-16 flex flex-col bg-[#000000]">
         {/* Header at the top */}
         <Header title="Dashboard" />
-
+  
         {/* Main Content */}
         <div className="flex-1 p-6 overflow-auto">
           {/* Preview Section */}
           <div className="mt-12">
-            <PreviewComponent qucikScanData={qucikScanData.dashboard}  />
+            <PreviewComponent qucikScanData={qucikScanData.dashboard} />
           </div>
-
+  
           {/* History Section */}
           <div className="mt-3">
-            <HistoryComponent  qucikScanData={qucikScanData.scansHistory} />
+            <HistoryComponent qucikScanData={qucikScanData.scansHistory} />
           </div>
         </div>
       </div>
     </div>
   );
+  
+  
 };
 
 export default DashboardPage;

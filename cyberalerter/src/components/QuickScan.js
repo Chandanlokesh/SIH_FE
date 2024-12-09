@@ -95,7 +95,7 @@ const QuickScan = () => {
           type="text"
           value={productName}
           onChange={(e) => setProductName(e.target.value)}
-          className="w-full p-2 border rounded-md"
+          className="w-full p-2 border rounded-md bg-black"
           placeholder="Enter Product Name"
           required
         />
@@ -108,7 +108,7 @@ const QuickScan = () => {
           type="text"
           value={productVersion}
           onChange={(e) => setProductVersion(e.target.value)}
-          className="w-full p-2 border rounded-md"
+          className="w-full p-2 border rounded-md bg-black"
           placeholder="Enter Product Version"
         />
       </div>

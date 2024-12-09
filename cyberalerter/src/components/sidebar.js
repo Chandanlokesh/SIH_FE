@@ -40,7 +40,7 @@ const Sidebar = () => {
     <div
       className={`fixed top-0 left-0 h-full ${
         isHovered ? "w-48 shadow-xl" : "w-16"
-      } bg-black text-white transition-all duration-300 z-[998]`}
+      } bg-[#09051A] text-white transition-all duration-300 z-[998]`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
