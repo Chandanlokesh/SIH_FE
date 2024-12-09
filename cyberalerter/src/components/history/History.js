@@ -31,14 +31,14 @@ const HistoryComponent = ({ qucikScanData = [] }) => {
       <div className="flex space-x-4">
         <button
           className={`${
-            activeOption === 'monitorScan' ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-600'
+            activeOption === 'monitorScan' ? 'text-blue-900 border-b-2 border-blue-900' : 'text-gray-600'
           }`}
           onClick={() => setActiveOption('monitorScan')}>
           <b>Monitor Scan History</b>
         </button>
         <button
           className={`${
-            activeOption === 'otherHistory' ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-600'
+            activeOption === 'otherHistory' ? 'text-blue-900 border-b-2 border-blue-900' : 'text-gray-600'
           }`}
           onClick={() => setActiveOption('otherHistory')}
         >

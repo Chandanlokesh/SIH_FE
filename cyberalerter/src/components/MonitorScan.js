@@ -145,7 +145,7 @@ const MonitorScanComponent = () => {
           />
         </div>
 
-        <div>
+        {/* <div>
           <label className="block text-gray-800 font-semibold">Product Version:</label>
           <input
             type="text"
@@ -155,7 +155,7 @@ const MonitorScanComponent = () => {
             className={`w-full p-2 border rounded-md ${!selectedVendor && "bg-gray-200"}`}
             disabled={!selectedVendor}
           />
-        </div>
+        </div> */}
 
         <div className="flex space-x-4 justify-end">
           <button

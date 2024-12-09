@@ -52,9 +52,17 @@ const DoughnutChart = ({ data }) => {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: { display: true },
+          legend: {
+            display: true,
+            position: 'right', // Moves the legend to the right
+            labels: {
+              usePointStyle: true, // Optional: use circular points instead of squares
+              padding: 20, // Add spacing between legend items
+            },
+          },
         },
       };
+      
       
 
   return <Doughnut data={chartData} options={options} />;
