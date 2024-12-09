@@ -53,14 +53,14 @@ const DashboardPage = () => {
         <Header title="Dashboard" />
 
         {/* Main Content */}
-        <div className="flex-1 mt-10 p-6 overflow-auto">
+        <div className="flex-1 p-6 overflow-auto">
           {/* Preview Section */}
-          <div className="mt-8">
+          <div className="mt-12">
             <PreviewComponent qucikScanData={qucikScanData.dashboard}  />
           </div>
 
           {/* History Section */}
-          <div className="mt-8">
+          <div className="mt-3">
             <HistoryComponent  qucikScanData={qucikScanData.scansHistory} />
           </div>
         </div>
