@@ -1,35 +1,64 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "../components/sidebar";
 import Header from "../components/Header";
 import MonitorScan from "../components/MonitorScan";
 import QuickScan from "../components/QuickScan";
-
-const DashboardPage = () => {
+import { getAPI } from "../helpers/apiRequests";
+import Cookies from "js-cookie";
+const ScanPage = () => {
   const [activeTab, setActiveTab] = useState("quickScan"); // State for active tab
+  const [itList,setITList]=useState([]);
+  const [otList,setOTList]=useState([]);
+  const [existingProducts, setExistingProducts]=useState(null);
+  const getIToem = () => {
+    getAPI({
+      endpoint: "/monitorscan/vendors/IT",
+      callback: (response) => {
+        if (response.status === 200) {
+          console.log(" [rs] ", response.data);
+           setITList(response.data.vendors);
+        } else {
+          console.error(response.data.message);
+        }
+      },
+    });
+  };
 
-  
-  // const [inputCount, setInputCount] = useState(0);
+  const getOToem = () => {
+    getAPI({
+      endpoint: "/monitorscan/vendors/OT",
+      callback: (response) => {
+        if (response.status === 200) {
+           setOTList(response.data.vendors);
+        } else {
+          console.error(response.data.message);
+        }
+      },
+    });
+  };
 
-  // const handleInputCountChange = (e) => {
-  //   setInputCount(parseInt(e.target.value));
-  // };
 
-  // const renderInputs = () => {
-  //   const inputs = [];
-  //   for (let i = 1; i <= inputCount; i++) {
-  //     inputs.push(
-  //       <div key={i}>
-  //         <label className="block text-sm font-semibold mb-2">Input {i}</label>
-  //         <input
-  //           type="text"
-  //           className="w-full p-2 border rounded-md"
-  //           placeholder={`Enter Input ${i}`}
-  //         />
-  //       </div>
-  //     );
-  //   }
-  //   return inputs;
-  // };
+  const getProductsMonitored = ()=>{
+    getAPI({
+      endpoint: "/monitorscan/products/"+ Cookies.get("userId"),
+      callback: (response) => {
+        if (response.status === 200) {
+          setExistingProducts(response.data.products);
+        } else {
+          console.error(response.data.message);
+        }
+      },
+    });
+  }
+
+   console.log(" [rs] " , itList)
+  useEffect(() => {
+    getIToem();
+    getOToem();
+    getProductsMonitored();
+  }, []);
+
+
 
   return (
     <div className="flex h-screen bg-cover bg-center bg-scan-patternn">
@@ -71,7 +100,7 @@ const DashboardPage = () => {
       <div className={`bg-white rounded-b-lg p-6 border-b-2 border-x-2 h-full ${activeTab === "monitorScan"? " rounded-t-xl ":" rounded-tr-lg "}`}>
         {/* Content based on active tab */}
         {activeTab === "quickScan" && <QuickScan />}
-        {activeTab === "monitorScan" && <MonitorScan />}
+        {activeTab === "monitorScan" && <MonitorScan itList={itList} otList={otList} existingProducts={existingProducts} getProductsMonitored={getProductsMonitored}/>}
       </div>
       </div>
       </div>
@@ -82,4 +111,4 @@ const DashboardPage = () => {
   );
 };
 
-export default DashboardPage;
+export default ScanPage;

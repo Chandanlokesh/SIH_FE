@@ -22,8 +22,9 @@ const DashboardPage = () => {
         }
       },
     });
-    getQuickScanHistory()
-  },[])
+    getQuickScanHistory();
+    getProductsMonitored();
+    },[])
 
   const getQuickScanHistory=()=>{
     getAPI({
@@ -40,6 +41,20 @@ const DashboardPage = () => {
       }
     },
   });
+  }
+
+  const getProductsMonitored = () =>{
+    getAPI({
+      endpoint: "/monitorscan/products/"+Cookies.get('userId'),
+      callback: (response) => {
+        if (response.status === 200) {
+          localStorage.setItem("userProducts", JSON.stringify(response.data.products));
+             
+        } else {
+          alert(response.data.message || "Failed to add product.");
+        }
+      },
+    });
   }
 
   return (

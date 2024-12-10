@@ -2,18 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { getAPI, postAPI } from '../helpers/apiRequests';
 import Cookies from 'js-cookie'; // Assuming you use js-cookie for cookies management.
 
-const MonitorScanComponent = () => {
-  const [oemList, setOemList] = useState(null);
+const MonitorScanComponent = ({itList,otList , existingProducts, getProductsMonitored }) => {
   const [selectedType, setSelectedType] = useState("");
   const [vendorList, setVendorList] = useState([]);
   const [selectedVendor, setSelectedVendor] = useState("");
   const [productName, setProductName] = useState("");
   const [productVersion, setProductVersion] = useState("");
   const [addedProducts, setAddedProducts] = useState([]);
+  const [remainingProducts, setRemainingProducts]=useState(10);
+  const [limitError, setLimitError]=useState(false);
 
   const handleTypeChange = (type) => {
     setSelectedType(type);
-    setVendorList(oemList[type] || []);
+    setVendorList([]);
     setSelectedVendor("");
     setProductName("");
     setProductVersion("");
@@ -26,6 +27,25 @@ const MonitorScanComponent = () => {
     setProductName("");
     setProductVersion("");
   };
+
+  useEffect(() => {
+    const storedData = localStorage.getItem("userData");
+    let userData = storedData ? JSON.parse(storedData) : null;
+    let productLimit = userData.subscriptionPlan=="Pro"?10:5;
+    setRemainingProducts(productLimit);
+    if (existingProducts && Array.isArray(existingProducts)) {
+      // Initialize addedProducts with product names from existingProducts
+      setAddedProducts(existingProducts);
+      // Calculate remaining slots
+      // setRemainingProducts(productLimit - existingProducts.length);
+    } else {
+      // If no existing products, set default values
+      setAddedProducts([]);
+    }
+  }, [existingProducts]);
+  
+
+
 
   const handleStartMonitoring = () => {
     postAPI({
@@ -44,34 +64,25 @@ const MonitorScanComponent = () => {
 
   };
 
-  const getOEMList = () => {
-    getAPI({
-      endpoint: "/monitorscan/oem-list",
-      callback: (response) => {
-        if (response.status === 200) {
-          setOemList(response.data);
-        } else {
-          console.error(response.data.message);
-        }
-      },
-    });
-  };
 
   const addProduct = () => {
     const params = {
       userId: Cookies.get("userId"), // Assuming userId is stored in cookies.
-      vendorId: vendorList.find((vendor) => vendor.vendorName === selectedVendor)?.vendorId,
+      vendorName: selectedVendor,
       productName,
       productVersion,
     };
 
     postAPI({
-      endpoint: "/monitorscan/add-product",
+      endpoint: "/monitorscan/products",
       params,
       callback: (response) => {
-        if (response.status === 200) {
-          const newProduct = { productName, productVersion, vendor: selectedVendor };
-          setAddedProducts((prev) => [...prev, newProduct].slice(0, 10)); // Limit to 10 products.
+        if (response.status === 201) {
+          console.log("[added] ", response.data.remainingSlots)
+          alert(response.data.message)
+          // setAddedProducts((prev) => [...prev, response.data.product]); // Limit to 10 products.
+          getProductsMonitored();
+          // setRemainingProducts(response.data.remainingSlots);
           setProductName("");
           setProductVersion("");
         } else {
@@ -81,9 +92,10 @@ const MonitorScanComponent = () => {
     });
   };
 
-  useEffect(() => {
-    getOEMList();
-  }, []);
+  useEffect(()=>{
+     if(addedProducts.length==remainingProducts)
+      setLimitError(true);
+  },[addedProducts])
 
   return (
     <div className="flex p-4 bg-white h-full space-x-4">
@@ -98,7 +110,7 @@ const MonitorScanComponent = () => {
               checked={selectedType === "IT"}
               onChange={() => handleTypeChange("IT")}
               className="text-blue-500"
-              disabled={!oemList}
+              disabled={!itList || remainingProducts == addedProducts.length}
             />
             <span className="text-gray-700">IT</span>
           </label>
@@ -109,7 +121,7 @@ const MonitorScanComponent = () => {
               checked={selectedType === "OT"}
               onChange={() => handleTypeChange("OT")}
               className="text-blue-500"
-              disabled={!oemList}
+              disabled={!otList || addedProducts.length==remainingProducts}
             />
             <span className="text-gray-700">OT</span>
           </label>
@@ -121,14 +133,21 @@ const MonitorScanComponent = () => {
             value={selectedVendor}
             onChange={(e) => setSelectedVendor(e.target.value)}
             className={`w-full p-2 border rounded-md ${!selectedType && "bg-gray-200"}`}
-            disabled={!selectedType}
+            disabled={!selectedType || addedProducts.length==remainingProducts}
           >
             <option value="">Select Vendor</option>
-            {vendorList.map((vendor) => (
-              <option key={vendor.vendorId} value={vendor.vendorName}>
+            {selectedType=== "OT" ?
+            itList.map((vendor) => (
+              <option key={vendor._id} value={vendor.vendorName}>
                 {vendor.vendorName}
               </option>
-            ))}
+            )) :
+            otList.map((vendor) => (
+              <option key={vendor.vendorId} value={vendor.vendorName}>
+                {vendor.vendorName}
+              </option>))
+          
+          }
           </select>
         </div>
 
@@ -141,21 +160,9 @@ const MonitorScanComponent = () => {
             placeholder="Enter product name"
             className={`w-full p-2 border rounded-md ${!selectedVendor && "bg-gray-200"}`}
             required
-            disabled={!selectedVendor}
+            disabled={!selectedVendor || addedProducts.length==remainingProducts}
           />
         </div>
-
-        {/* <div>
-          <label className="block text-gray-800 font-semibold">Product Version:</label>
-          <input
-            type="text"
-            value={productVersion}
-            onChange={(e) => setProductVersion(e.target.value)}
-            placeholder="Enter product version (optional)"
-            className={`w-full p-2 border rounded-md ${!selectedVendor && "bg-gray-200"}`}
-            disabled={!selectedVendor}
-          />
-        </div> */}
 
         <div className="flex space-x-4 justify-end">
           <button
@@ -169,11 +176,12 @@ const MonitorScanComponent = () => {
             type="button"
             onClick={addProduct}
             className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-            disabled={!productName || !selectedVendor}
+            disabled={!productName || !selectedVendor  || addedProducts.length==remainingProducts}
           >
             Add Product
           </button>
         </div>
+        {limitError && (remainingProducts == 10 ? <p className='text-blue'>Products limit reahced</p> : <p className='text-blue'>Products limit reahced. Upgrade to Pro</p>)}
       </div>
 
       {/* Vertical Divider */}
@@ -184,7 +192,7 @@ const MonitorScanComponent = () => {
         <div className="border border-2 rounded-md border-gray-800 min-h-96">
           <div className="flex justify-between items-center bg-gray-200 rounded-t-md p-2">
             <h3 className="font-semibold text-gray-800">Added Products:</h3>
-            <p className="text-gray-600">{addedProducts.length}/10</p>
+            <p className="text-gray-600">{addedProducts.length}/{remainingProducts}</p>
           </div>
 
           <div className="overflow-y-auto p-2">
