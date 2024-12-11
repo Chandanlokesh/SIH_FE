@@ -177,7 +177,7 @@ const MonitorScanComponent = ({itList,otList , existingProducts, getProductsMoni
           <button
             type="button"
             onClick={addProduct}
-            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+            className={`px-4 py-2  text-white rounded-md  ${!productName || !selectedVendor  || addedProducts.length==remainingProducts?"bg-blue-200" :"bg-blue-500 hover:bg-blue-600" }`}
             disabled={!productName || !selectedVendor  || addedProducts.length==remainingProducts}
           >
             Add Product

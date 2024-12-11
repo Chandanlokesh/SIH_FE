@@ -137,7 +137,7 @@ import subs from '../images/Subs.png';
 // export default PreviewComponent;
 
 
-const PreviewComponent = ({ qucikScanData, combinedData }) => {
+const PreviewComponent = ({ qucikScanData, combinedData , notificationSent}) => {
   const [showSubscribe, setShowSubscribe] = useState(false);
   const [severityCountx, setSeverityCount] = useState({
     Low: 0,
@@ -282,7 +282,7 @@ const PreviewComponent = ({ qucikScanData, combinedData }) => {
     <div className="text-left">
       <h3 className="text-xl font-bold group-hover:text-white">Notifications <br /> Received</h3>
     </div>
-    <div className="text-[65px] text-gray-900 group-hover:text-white">{qucikScanData?.notificationSent || 7}</div>
+    <div className="text-[65px] text-gray-900 group-hover:text-white">{notificationSent??0}</div>
   </div>
 
   {/* Card 4: Total Products Monitored */}
@@ -290,7 +290,7 @@ const PreviewComponent = ({ qucikScanData, combinedData }) => {
     <div className="text-left">
       <h3 className="text-xl font-bold group-hover:text-white">Total Products<br />Being Monitored</h3>
     </div>
-    <div className="text-[65px] text-gray-900 group-hover:text-white">{combinedData.length}</div>
+    <div className="text-[65px] text-gray-900 group-hover:text-white">{combinedData?.length}</div>
   </div>
 
   {/* Card 5: Subscription Plan */}
@@ -325,7 +325,7 @@ const PreviewComponent = ({ qucikScanData, combinedData }) => {
         <div className="bg-white shadow-md rounded-lg p-2 border-[1px] border-gray h-full">
           <h3 className="text-xl font-bold text-gray-700 mb-4">Vulnerabilities in QuickScan</h3>
           <div className="h-[80%] w-full">
-            <BarChart data={severityCountx} />
+         { severityCountx && <BarChart data={severityCountx} />}
           </div>
         </div>
 

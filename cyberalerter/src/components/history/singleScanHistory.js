@@ -121,30 +121,36 @@ filteredProducts.map((scan, index) => {
                   CVE ID: {result.cve_id}
                 </div>
                 <div className="mt-2 px-2 pb-2">
+                {result.vulnerabilityDescription &&
                   <p>
                     <b>Description:</b> {result.vulnerabilityDescription}
                   </p>
+                }
+                  {result.published_date &&
                   <p>
+                
                     <b>Published Date:</b>{" "}
-                    {result.published_date
-                      ? new Date(result.publishedDate).toLocaleDateString()
-                      : "N/A"}
+                    {result.published_date}
                   </p>
+          }
+           {result.last_modified &&
                   <p>
                     <b>Last Modified:</b>{" "}
-                    {result.last_modified
-                      ? new Date(result.lastModified).toLocaleDateString()
-                      : "N/A"}
+                    {result.last_modified}
                   </p>
+          }
+          {result.baseScore &&
                   <p>
                     <b>Base Score:</b> {result.baseScore}
                   </p>
+          }
                   
                   {result.baseSeverity &&
                   <p>
                   <b>Severity:</b> {result.baseSeverity}
                  
                   </p>}
+                  {result.oemUrl &&
                   <p>
                     <b>OEM URL:</b>{" "}
                     <a
@@ -156,6 +162,7 @@ filteredProducts.map((scan, index) => {
                       Details
                     </a>
                   </p>
+          }
                 </div>
               </div>
             );

@@ -12,7 +12,7 @@ const DashboardPage = () => {
   const [qucikScanData, setQucikScanData] = useState("")
   const [monitoredProducts,setMonitoredProducts]=useState([])
   const [combinedData, setCombinedData] = useState([]);
-
+  const [notificationSent,setNotificationSent]=useState(0)
   useEffect(()=>{
     getAPI({
       endpoint: "/users/user_profile",
@@ -27,6 +27,7 @@ const DashboardPage = () => {
     });
     getQuickScanHistory();
     getProductsMonitored();
+    getNotificationCount();
     },[])
 
   const getQuickScanHistory=()=>{
@@ -45,6 +46,27 @@ const DashboardPage = () => {
     },
   });
   }
+
+  const getNotificationCount=()=>{
+    getAPI({
+    endpoint: "/notification", //proper end point add madko 
+    params:{ 
+       userId: Cookies.get('userId')
+    },
+    callback: (response) => {
+      if (response.status === 200) {
+           // response format {notification : 6}
+        //{}
+        setNotificationSent(response.data.notification)
+      } else {
+        // Handle error response
+        console.error(response.data.message);
+      }
+    },
+  });
+  }
+
+
 
   const getProductsMonitored = () => {
     getAPI({
@@ -106,12 +128,12 @@ const DashboardPage = () => {
         <div className="flex-1 p-6 overflow-auto">
           {/* Preview Section */}
           <div className="mt-12">
-          {combinedData && qucikScanData &&   <PreviewComponent qucikScanData={qucikScanData.dashboard} combinedData={combinedData}  /> }
+          {combinedData && qucikScanData &&   <PreviewComponent qucikScanData={qucikScanData.dashboard} combinedData={combinedData}  notificationSent={notificationSent} /> }
           </div>
 
           {/* History Section */}
           <div className="mt-3">
-            <HistoryComponent  qucikScanData={qucikScanData.scansHistory} monitorScanData={combinedData}/>
+          {combinedData && qucikScanData &&   <HistoryComponent  qucikScanData={qucikScanData.scansHistory} monitorScanData={combinedData}/>}
           </div>
         </div>
       </div>

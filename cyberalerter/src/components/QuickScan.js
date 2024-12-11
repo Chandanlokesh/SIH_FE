@@ -182,17 +182,17 @@ const QuickScan = () => {
             className={`p-1 cursor-pointer ${severityColor} ${severityText} rounded-t-md`}
             onClick={() => toggleCollapse(index)}
           >
-            <p><b>CVE ID:</b> {result.cve_id}</p>
+            {result.cve_id && <p><b>CVE ID:</b> {result.cve_id}</p>}
           </div>
 
           {/* Collapsible Content */}
           {expandedIndex === index && (
             <div className="p-1 border-1-px">
-              <p><b>CVE ID:</b> {result.cve_id}</p>
-              <p><b>Description:</b> {result.vulnerabilityDescription}</p>
-              <p><b>Published Date:</b> {result.published_date}</p>
-              <p><b>Last Modified:</b> {result.last_modified}</p>
-              <p><b>Base Score:</b> {result.baseScore}</p>
+              {result.cve_id &&<p><b>CVE ID:</b> {result.cve_id}</p>}
+              {result.vulnerabilityDescription  && <p><b>Description:</b> {result.vulnerabilityDescription}</p>}
+              {result.published_date && <p><b>Published Date:</b> {result.published_date}</p>}
+              {result.last_modified  && <p><b>Last Modified:</b> {result.last_modified}</p>}
+              {result.baseScore && <p><b>Base Score:</b> {result.baseScore}</p>}
              { result.baseSeverity && <p><b>Severity:</b> {result.baseSeverity}</p> }
               <p>
                 <b>OEM URL:</b>{" "}
