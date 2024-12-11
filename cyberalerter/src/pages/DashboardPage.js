@@ -49,7 +49,7 @@ const DashboardPage = () => {
 
   const getNotificationCount=()=>{
     getAPI({
-    endpoint: "/notification", //proper end point add madko 
+    endpoint: "/monitorscan/notification", //proper end point add madko 
     params:{ 
        userId: Cookies.get('userId')
     },
