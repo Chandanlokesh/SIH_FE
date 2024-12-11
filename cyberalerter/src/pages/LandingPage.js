@@ -11,7 +11,7 @@ import LogImg from '../images/Login.svg';
 import email from '../images/logo/gmail.png';
 import github from '../images/logo/github.png';
 import FooterImg from '../images/Footerimg.svg';
-import logo from '../images/logo/logo_over_blue.svg';
+import logo from '../images/logo/newLogo.svg';
 import Recording from '../images/video/step.mp4';
 import '../styles/App.css';
 import 'slick-carousel/slick/slick.css';

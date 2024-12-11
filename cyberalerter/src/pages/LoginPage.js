@@ -11,7 +11,7 @@ import '../styles/App.css';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from 'react-router-dom';
-import logo from '../images/logo/logo_over_white.svg';
+import logo from '../images/logo/newLogo.svg';
 
 const LoginPage = () => {
   const [isSignUp, setIsSignUp] = useState(false);

@@ -42,7 +42,7 @@ const HistoryComponent = ({ qucikScanData = [] , monitorScanData=[]}) => {
           }`}
           onClick={() => setActiveOption('otherHistory')}
         >
-          <b>Single Scan History</b>
+          <b>Quick Scan History</b>
         </button>
       </div>
 

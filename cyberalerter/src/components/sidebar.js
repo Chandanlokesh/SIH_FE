@@ -4,7 +4,7 @@ import Dashboard from "../images/dashboard.svg";
 import Scanner from "../images/iscanner.svg";
 import user from "../images/user-blue.svg";
 import chatbot from "../images/chatbot-icon.svg";
-import logo from "../images/logo/logo_over_black.svg";
+import logo from "../images/logo/newLogo.svg";
 import Logout from "../images/Logout.svg";
 import { postAPI } from "../helpers/apiRequests";
 import Cookies from "js-cookie";
