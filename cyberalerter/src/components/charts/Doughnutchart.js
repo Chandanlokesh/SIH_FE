@@ -56,7 +56,7 @@ const DoughnutChart = ({ doughnutChartData }) => {
             position: 'right', // Moves the legend to the right
             labels: {
               usePointStyle: true, // Optional: use circular points instead of squares
-              padding: 20, // Add spacing between legend items
+              padding: 10, // Add spacing between legend items
             },
           },
         },

@@ -47,8 +47,8 @@ const LineChart = ({ lineChartData }) => {
         datasets: lineChartData.datasets.map((dataset, index) => ({
             label: dataset.label, // Product name
             data: dataset.data, // Count of vulnerabilities for each date
-            borderColor: dataset.borderColor || modernBrightColors[index], // Predefined color for each product
-            backgroundColor: dataset.backgroundColor || modernBrightColors[index], // Fill the area under the line with the same color
+            borderColor: modernBrightColors[index], // Predefined color for each product
+            backgroundColor:  modernBrightColors[index], // Fill the area under the line with the same color
             fill: true,
             tension: 0.3, // Curved lines
         })),

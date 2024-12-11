@@ -11,7 +11,7 @@ const QuickScanHistoryComponent = ({ qucikScanData = [] }) => {
   );
 
   return (
-    <div className="shadow-md rounded-lg h-[85vh] overflow-hidden bg-gradient-to-b from-[#50BBFF] via-[#40ACFB] to-[#0884DC]">
+    <div className="shadow-md rounded-lg h-[80vh] overflow-hidden bg-gradient-to-b from-[#50BBFF] via-[#40ACFB] to-[#0884DC]">
       {/* Header with Search Bar */}
       <div className="px-4 py-2 font-bold text-lg border-b border-gray-300 shadow-md flex items-center justify-between text-white">
         <h4>Quick Scans</h4>
@@ -27,7 +27,7 @@ const QuickScanHistoryComponent = ({ qucikScanData = [] }) => {
         </div>
       </div>
 
-      <div className="flex h-[77vh]">
+      <div className="flex h-[72vh]">
         {/* Left Section: Product List */}
         <div className="w-1/4 overflow-y-auto">
           <ul>
