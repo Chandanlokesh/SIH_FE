@@ -48,16 +48,18 @@ const MonitorScanComponent = ({itList,otList , existingProducts, getProductsMoni
 
 
   const handleStartMonitoring = () => {
+    const productIds = addedProducts.map(product => product.productId);
     postAPI({
-      endpoint: "/monitorscan/start-scan",
-      params: {userId: Cookies.get("userId")},
+      endpoint: "/monitorscan/monitor",
+      params: {userId: Cookies.get("userId"),
+      productIds
+      },
       callback: (response) => {
         if (response.status === 200) {
-          setAddedProducts([]);
           handleClearFields();
           alert("Monitoring started!");
         } else {
-          alert(response.data.message || "Failed to add product.");
+          alert("Monitoring failed");
         }
       },
     });

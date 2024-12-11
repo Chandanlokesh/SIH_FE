@@ -26,27 +26,20 @@ import {
   );
   
 
-const DoughnutChart = ({ data }) => {
-
-    const doughnutChartData = [
-        { product: "Product A", count: 30 },
-        { product: "Product B", count: 45 },
-        { product: "Product C", count: 25 },
-        { product: "Product D", count: 10 },
-      ];
+const DoughnutChart = ({ doughnutChartData }) => {
       
-
       const chartData = {
         labels: doughnutChartData.map((item) => item.product),
         datasets: [
           {
             data: doughnutChartData.map((item) => item.count),
             backgroundColor: ['#FFB6C1', '#87CEEB', '#FFD700', '#98FB98'], // Light Pink, Sky Blue, Gold, Pale Green
-            borderColor: ['#FF69B4', '#4682B4', '#FFA500', '#00FA9A'], // Hot Pink, Steel Blue, Orange, Medium Spring Green
+            borderColor: ['#FF69B4', '#4682B4', '#FFA500', '#00FA9A'],
             borderWidth: 1,
           },
         ],
       };
+      
       
       const options = {
         responsive: true,

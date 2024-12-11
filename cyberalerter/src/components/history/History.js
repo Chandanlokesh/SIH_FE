@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import MonitorScanHistoryComponent from './monitorScanHistory';
 import QuickScanHistoryComponent from './singleScanHistory';
-const HistoryComponent = ({ qucikScanData = [] }) => {
+const HistoryComponent = ({ qucikScanData = [] , monitorScanData=[]}) => {
   const [activeOption, setActiveOption] = useState('monitorScan'); // State for active option
 
   //   const element = document.getElementById(scanId);  // Get the specific div by scanId
@@ -47,7 +47,7 @@ const HistoryComponent = ({ qucikScanData = [] }) => {
       </div>
 
       {/* Render content based on active option */}
-      {activeOption === 'monitorScan' && <MonitorScanHistoryComponent MonitorScanData={[]}/>}
+      {activeOption === 'monitorScan' && <MonitorScanHistoryComponent combinedData={monitorScanData}/>}
 
       {/* Table for scan history */}
       {activeOption === 'otherHistory' && <QuickScanHistoryComponent qucikScanData={qucikScanData}/>}

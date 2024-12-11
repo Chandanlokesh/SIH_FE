@@ -137,7 +137,7 @@ import subs from '../images/Subs.png';
 // export default PreviewComponent;
 
 
-const PreviewComponent = ({ qucikScanData, lineChartData, doughnutChartData }) => {
+const PreviewComponent = ({ qucikScanData, combinedData }) => {
   const [showSubscribe, setShowSubscribe] = useState(false);
   const [severityCountx, setSeverityCount] = useState({
     Low: 0,
@@ -165,6 +165,95 @@ const PreviewComponent = ({ qucikScanData, lineChartData, doughnutChartData }) =
     }
   }, [userData]);
 
+
+  const prepareLineChartData = (data) => {
+    const productDateCounts = {};
+  
+    // Iterate over each product
+    data.forEach((item) => {
+      const productName = item.productName;
+      const scanDetails = item?.scanDetails?.scanDetails;
+  
+      if (scanDetails && scanDetails.publishedDates) {
+        scanDetails.publishedDates.forEach((date) => {
+          const formattedDate = new Date(date).toISOString().split('T')[0]; // format to YYYY-MM-DD
+  
+          // Initialize product entry if not already present
+          if (!productDateCounts[productName]) {
+            productDateCounts[productName] = {};
+          }
+  
+          // Count the vulnerabilities for each product on a given date
+          productDateCounts[productName][formattedDate] = 
+            (productDateCounts[productName][formattedDate] || 0) + 1;
+        });
+      }
+    });
+  
+    // Create datasets for the chart
+    const productNames = Object.keys(productDateCounts);
+    const allDates = [...new Set(productNames.flatMap(product => Object.keys(productDateCounts[product])))];
+  
+    // Create the data for the chart
+    const datasets = productNames.map((productName) => {
+      const dataForProduct = allDates.map((date) => {
+        return productDateCounts[productName][date] || 0; // Use 0 if no vulnerabilities on that date for the product
+      });
+  
+      return {
+        label: productName, // Use product name as the label for each line
+        data: dataForProduct,
+        borderColor: getRandomColor(), // You can define a function to generate a color or pick a static one
+        backgroundColor: 'rgba(25, 86, 194, 0.1)', // Optional background color for line area
+        fill: true, // Fill the area under the line
+        tension: 0.2, // Curved lines
+      };
+    });
+  
+    // Return the chart data object
+    return {
+      labels: allDates, // Use all dates as x-axis labels
+      datasets: datasets, // Add the datasets for each product
+    };
+  };
+  
+  // Utility function to generate a random color for each product line
+  const getRandomColor = () => {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  };
+  
+  // Usage example:
+  const lineChartData = combinedData ? prepareLineChartData(combinedData) : {};
+  
+
+  const prepareDoughnutChartData = (data) => {
+    const productCounts = {};
+  
+    data.forEach((item) => {
+      const productName = item?.productName;
+      const vulnerabilities = item?.scanDetails?.scanDetails?.totalVulnerabilities;
+      if (productName && vulnerabilities !== undefined) {
+        productCounts[productName] = (productCounts[productName] || 0) + vulnerabilities;
+      }
+    });
+  
+    // Convert productCounts object to an array of objects for chart
+    return Object.entries(productCounts).map(([product, count]) => ({
+      product,
+      count,
+    }));
+  };
+  
+  
+  const doughnutChartData = combinedData? prepareDoughnutChartData(combinedData): [];
+  
+
+
   return (
     <div className="grid grid-rows-auto gap-4  pb-4">
       {/* Row 1: Cards */}
@@ -176,7 +265,7 @@ const PreviewComponent = ({ qucikScanData, lineChartData, doughnutChartData }) =
       <p className="text-sm text-gray-500 group-hover:text-white">Today</p>
       <h3 className="text-xl font-bold group-hover:text-white">Quick <br /> Scans</h3>
     </div>
-    <div className="text-[65px] text-gray-900 group-hover:text-white">{qucikScanData?.scansToday || 12}</div>
+    <div className="text-[65px] text-gray-900 group-hover:text-white">{qucikScanData?.scansToday}</div>
   </div>
 
   {/* Card 2: Monitor Scans */}
@@ -185,7 +274,7 @@ const PreviewComponent = ({ qucikScanData, lineChartData, doughnutChartData }) =
       <span className="text-sm text-gray-500 group-hover:text-white">Total</span>
       <h3 className="text-xl font-bold group-hover:text-white">Monitor <br /> Scans</h3>
     </div>
-    <div className="text-[65px] text-gray-900 group-hover:text-white">7</div>
+    <div className="text-[65px] text-gray-900 group-hover:text-white">0</div>
   </div>
 
   {/* Card 3: Notifications Sent */}
@@ -201,7 +290,7 @@ const PreviewComponent = ({ qucikScanData, lineChartData, doughnutChartData }) =
     <div className="text-left">
       <h3 className="text-xl font-bold group-hover:text-white">Total Products<br />Being Monitored</h3>
     </div>
-    <div className="text-[65px] text-gray-900 group-hover:text-white">{qucikScanData?.notificationSent || 12}</div>
+    <div className="text-[65px] text-gray-900 group-hover:text-white">{combinedData.length}</div>
   </div>
 
   {/* Card 5: Subscription Plan */}
@@ -244,7 +333,7 @@ const PreviewComponent = ({ qucikScanData, lineChartData, doughnutChartData }) =
         <div className="bg-white shadow-md rounded-lg p-2 border-[1px] border-gray h-full">
           <h3 className="text-xl font-bold text-gray-700 mb-4">Vulnerabilities Over Time</h3>
           <div className="h-[80%]">
-            <LineChart data={lineChartData} />
+         {lineChartData &&    <LineChart lineChartData={lineChartData} />}
           </div>
         </div>
 
@@ -255,7 +344,7 @@ const PreviewComponent = ({ qucikScanData, lineChartData, doughnutChartData }) =
     <div className="text-lg font-semibold text-gray-900">Products</div>
   </div>
   <div className="h-[80%]">
-    <DoughnutChart data={doughnutChartData} />
+   {doughnutChartData &&  <DoughnutChart doughnutChartData={doughnutChartData} /> }
   </div>
 </div>
       </div>

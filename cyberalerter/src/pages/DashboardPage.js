@@ -10,6 +10,9 @@ import Cookies from 'js-cookie';
 
 const DashboardPage = () => {
   const [qucikScanData, setQucikScanData] = useState("")
+  const [monitoredProducts,setMonitoredProducts]=useState([])
+  const [combinedData, setCombinedData] = useState([]);
+
   useEffect(()=>{
     getAPI({
       endpoint: "/users/user_profile",
@@ -43,19 +46,51 @@ const DashboardPage = () => {
   });
   }
 
-  const getProductsMonitored = () =>{
+  const getProductsMonitored = () => {
     getAPI({
-      endpoint: "/monitorscan/products/"+Cookies.get('userId'),
-      callback: (response) => {
+      endpoint: "/monitorscan/products/" + Cookies.get("userId"),
+      callback: async (response) => {
         if (response.status === 200) {
-          localStorage.setItem("userProducts", JSON.stringify(response.data.products));
-             
+          const products = response.data.products;
+          setMonitoredProducts(products);
+          await fetchScanDetails(products);
         } else {
-          alert(response.data.message || "Failed to add product.");
+          console.error("Failed to fetch monitored products");
         }
       },
     });
-  }
+  };
+
+  const fetchScanDetails = async (products) => {
+    try {
+      const productDetailsPromises = products.map(
+        (product) =>
+          new Promise((resolve) => {
+            getAPI({
+              endpoint: `/monitorscan/scan_details/${product.productId}`,
+              callback: (response) => resolve(response), // Provide a callback to resolve the promise
+            });
+          })
+      );
+  
+      const scanDetailsResponses = await Promise.all(productDetailsPromises);
+  
+      const combined = products.map((product, index) => ({
+        ...product,
+        scanDetails: scanDetailsResponses[index]?.data || {},
+      }));
+  
+      setCombinedData(combined);
+      console.log("Combined Data:", combined);
+    } catch (error) {
+      console.error("Error fetching scan details:", error);
+    }
+  };
+  
+
+
+   //charts
+
 
   return (
     <div className="flex h-screen bg-gray-300">
@@ -71,12 +106,12 @@ const DashboardPage = () => {
         <div className="flex-1 p-6 overflow-auto">
           {/* Preview Section */}
           <div className="mt-12">
-            <PreviewComponent qucikScanData={qucikScanData.dashboard}  />
+          {combinedData && qucikScanData &&   <PreviewComponent qucikScanData={qucikScanData.dashboard} combinedData={combinedData}  /> }
           </div>
 
           {/* History Section */}
           <div className="mt-3">
-            <HistoryComponent  qucikScanData={qucikScanData.scansHistory} />
+            <HistoryComponent  qucikScanData={qucikScanData.scansHistory} monitorScanData={combinedData}/>
           </div>
         </div>
       </div>

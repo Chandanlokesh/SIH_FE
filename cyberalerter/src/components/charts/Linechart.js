@@ -11,9 +11,9 @@ import {
     Title,
     Tooltip,
     Legend,
-  } from 'chart.js';
-  
-  ChartJS.register(
+} from 'chart.js';
+
+ChartJS.register(
     CategoryScale,
     LinearScale,
     PointElement,
@@ -23,52 +23,50 @@ import {
     Title,
     Tooltip,
     Legend
-  );
-  
+);
 
-const LineChart = ({ data }) => {
+const LineChart = ({ lineChartData }) => {
 
-    const lineChartData = [
-        { date: "2024-12-01", count: 12 },
-        { date: "2024-12-02", count: 15 },
-        { date: "2024-12-03", count: 8 },
-        { date: "2024-12-04", count: 20 },
-        { date: "2024-12-05", count: 18 },
-      ];
+    // Prepare chart data with multiple datasets (one for each product)
+    const chartData = {
+        labels: lineChartData.labels, // Use all unique dates
+        datasets: lineChartData.datasets.map((dataset) => ({
+            label: dataset.label, // Product name
+            data: dataset.data, // Count of vulnerabilities for each date
+            borderColor: dataset.borderColor || getRandomColor(), // Random or predefined color for each product
+            backgroundColor: dataset.backgroundColor || 'rgba(25, 86, 194, 0.1)', // Optional background for the area under the line
+            fill: true,
+            tension: 0.2, // Curved lines
+        })),
+    };
 
-      
-      const chartData = {
-        labels: lineChartData.map((item) => item.date),
-        datasets: [
-          {
-            label: 'Vulnerabilities',
-            data: lineChartData.map((item) => item.count),
-            borderColor: 'rgba(25, 86, 194, 1)', // Dark blue for the line
-            backgroundColor: 'rgba(25, 86, 194, 0.8)', // Light blue for the area below the line
-            tension: 0, // Straight lines
-            fill: true, // Ensures area below line is filled
-          },
-        ],
-      };
-      
-      const options = {
+    const options = {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: { display: false },
+            legend: { display: true }, // Show legend for each product line
         },
         scales: {
-          x: {
-            grid: { display: true }, // Show vertical gridlines
-          },
-          y: {
-            beginAtZero: true,
-          },
+            x: {
+                grid: { display: true }, // Show vertical gridlines
+            },
+            y: {
+                beginAtZero: true,
+            },
         },
-      };
-      
-      
-  return <Line data={chartData} options={options} />;
+    };
+
+    return <Line data={chartData} options={options} />;
+};
+
+// Utility function to generate a random color for each product line
+const getRandomColor = () => {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
 };
 
 export default LineChart;
