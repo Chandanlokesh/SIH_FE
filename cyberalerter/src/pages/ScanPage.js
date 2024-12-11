@@ -92,9 +92,9 @@ const ScanPage = () => {
         >
           Monitor Scan
         </button>
-        <button className="h-[28px] w-[28px] rounded-2xl  border border-blue-400 text-blue-400 ml-2">
+        {/* <button className="h-[28px] w-[28px] rounded-2xl  border border-blue-400 text-blue-400 ml-2">
                  ?
-        </button>
+        </button> */}
       </div>
       <div className="bg-gray-300 text-gray-600 border-gray-300 shadow-inner rounded-b-lg  rounded-tr-lg h-[90%]">
       <div className={`bg-white rounded-b-lg p-6 border-b-2 border-x-2 h-full ${activeTab === "monitorScan"? " rounded-t-xl ":" rounded-tr-lg "}`}>
