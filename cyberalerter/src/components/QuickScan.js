@@ -10,6 +10,7 @@ const QuickScan = () => {
   // State variables for form inputs
   const [productName, setProductName] = useState("apache");
   const [productVersion, setProductVersion] = useState("2.4.41");
+   const [year, setyear] = useState(" ");
   const [jsonData, setJsonData] = useState(null); // State to store the JSON data
   const [error, setError] = useState("");
   const [scanId, setScanId] = useState("");
@@ -48,6 +49,7 @@ const QuickScan = () => {
         userId: Cookies.get('userId'),
         productName: productName,
         productVersion: productVersion ?? null,
+        year: year ?? null,
       },
       callback: (response) => {
         console.log("[rs] response.status" , response.status , response.data.message)
@@ -111,6 +113,23 @@ const QuickScan = () => {
           className="w-full p-2 border rounded-md"
           placeholder="Enter Product Version"
         />
+      </div>
+         <div>
+        <label className="block text-sm font-semibold mb-2">
+         Year (optional)
+        </label>
+        <select
+          type=""
+          value={year}
+          onChange={(e) => setyear(e.target.value)}
+          style={{color: 'black', border: '1px solid #ccc', padding: '8px' ,width: '150px'}}
+        >
+          <option>select</option>
+          <option>2024-2023</option>
+           <option>2022-2021</option>
+          <option>2021-2020</option>
+            <option>All</option>
+        </select>
       </div>
     </form>
     <div className="mt-4 flex self-end space-x-2">
